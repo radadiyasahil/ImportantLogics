@@ -1,4 +1,7 @@
-﻿namespace ImportantLogics.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace ImportantLogics.Models
 {
     public class Product :DefaultProperty
     {
@@ -9,6 +12,6 @@
         public string? Description { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
-        public Brand? Brand { get; set; }
+        //public Brand? Brand { get; set; }
     }
 }

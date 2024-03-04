@@ -18,12 +18,13 @@ namespace ImportantLogics.Controllers
         }
 
         [HttpGet]
-        private List<Product> GetAll()
+        public List<Product> GetAll()
         {
             return db.products.AsQueryable().ToList();
         }
 
         [HttpGet]
+        [Route("{id}")]
         public Product Get(string id)
         {
             return BL_Product.getById(id);
@@ -36,7 +37,8 @@ namespace ImportantLogics.Controllers
         }
 
         [HttpPut]
-        public Product update(string id,[FromBody] Product product)
+        [Route("{id}")]
+        public Product update([FromRoute]string id,[FromBody] Product product)
         {
             if (product == null)
                 throw new InvalidDataException("Product is not exist!");
@@ -44,7 +46,8 @@ namespace ImportantLogics.Controllers
         }
 
         [HttpDelete]
-        public bool Delete(string id)
+        [Route("{id}")]
+        public bool Delete([FromRoute]string id)
         {
            return BL_Product.Delete(id);
         }

@@ -1,3 +1,7 @@
+using Autofac;
+using Autofac.Core;
+using ImportantLogics.Controllers;
+using ImportantLogics.Logics;
 using ImportantLogics.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<DbContext>();
+
+builder.Services.AddScoped<BL_Brand>();
+builder.Services.AddScoped<BL_Product>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

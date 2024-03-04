@@ -8,30 +8,39 @@ namespace ImportantLogics.Controllers
     [Route("Brand")]
     public class BrandController : Controller
     {
-        public DbContext db { get; set; }
-        public BL_Brand bL_Brand { get; set; }
+        private  DbContext db { get; set; }
+        private  BL_Brand bL_Brand { get; set; }
         public BrandController(DbContext dbContext, BL_Brand bL_Brand)
         {
             this.db = dbContext;
             this.bL_Brand = bL_Brand;
         }
+
         [HttpGet]
-        private List<Brand> GetAll()
+        public List<Brand> GetAll()
         {
           return db.brands.AsQueryable().ToList();
         }
 
         [HttpPost]
-        public void AddBrand(Brand brand)
+        public void AddBrand([FromBody]Brand brand)
         {
             brand.IsDeleted = false;
-            db.brands.InsertOne(brand);
+            bL_Brand.Insert(brand);
         }
 
         [HttpPut]
+        [Route("{id}")]
         public Brand UpdateBrand([FromRoute]string id,[FromBody]Brand brand)
         {
             return bL_Brand.Update(id, brand);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public bool DeleteBrand(string id)
+        {
+            return bL_Brand.Delete(id);
         }
     }
 }

@@ -27,8 +27,8 @@ namespace ImportantLogics.Logics
                 .Set(x => x.Quantity, product.Quantity)
                 .Set(x => x.Price, product.Price)
                 .Set(x => x.IsDeleted, product.IsDeleted)
-                .Set(x => x.Description, product.Description)
-                .Set(x => x.Brand, product.Brand);
+                .Set(x => x.Description, product.Description);
+                //.Set(x => x.Brand, product.Brand);
             commonUpdate(id, update);
             return product;
         }
@@ -42,7 +42,8 @@ namespace ImportantLogics.Logics
         public void commonUpdate(string id, UpdateDefinition<Product> update)
         {
             update = update.Set(x => x.ModifyOn, DateTime.Now);
-            db.products.UpdateOne(id, update);
+            var filter = Builders<Product>.Filter.Eq(x => x.Id, id);
+            db.products.UpdateOne(filter, update);
         }
     }
 }
